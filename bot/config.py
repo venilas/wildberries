@@ -6,7 +6,6 @@ from aiogram.client.default import DefaultBotProperties
 
 class Settings(BaseSettings):
     BOT_TOKEN: str
-    API_TOKEN: str
 
     DB_USER: str
     DB_PASS: str
