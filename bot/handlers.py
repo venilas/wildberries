@@ -42,9 +42,9 @@ async def article_valid(message: Message, state: FSMContext):
                 promo_text = ''
 
             if product.sale_price:
-                sale_price = f' <s>{product.sale_price}</s> ({product.sale}%)\n'
+                price = f' <b>{product.sale_price}</b> <s>{product.price}</s> ({product.sale}%)\n'
             else:
-                sale_price = '\n'
+                price = f'<b>{product.price}</b>\n'
 
             caption = (
                 f'Артикул: <code>{product.article}</code>\n'
@@ -54,7 +54,7 @@ async def article_valid(message: Message, state: FSMContext):
                 f'Бренд: <b><a href="https://www.wildberries.ru/brands/{product.brand.id}">{product.brand.name}</a></b>\n'
                 f'\n'
                 f'{promo_text}'
-                f'Цена: <b>{product.price}</b>{sale_price}'
+                f'Цена: {price}'
                 f'Кол-во товаров: <b>{product.quantity}</b>\n'
                 f'Кол-во отзывов: <b>{product.feedbacks}</b>'
             )
