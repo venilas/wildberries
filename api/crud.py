@@ -118,5 +118,6 @@ async def tracked_product(article: int, db: AsyncSession):
     await db.commit()
 
     result = await db.execute(select(TrackedProduct.id).where(TrackedProduct.article_id == article))
-    tracked_id = result.scalars().first()
-    await db.execute(update(Product).values(tracked_id=tracked_id))
+    tracking_id = result.scalars().first()
+    await db.execute(update(Product).values(tracking_id=tracking_id))
+    await db.commit()
