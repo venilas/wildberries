@@ -104,11 +104,8 @@ async def save_product(article: dict, db: AsyncSession):
 
 
 async def tracked_product(article: int, db: AsyncSession):
-    result = await db.execute(select(Product).where(Product.article == article))
-    product = result.scalars().first()
-
     stmt = insert(TrackedProduct).values(
-        article_id=product.article
+        article_id=article
     ).on_conflict_do_update(
         index_elements=['article_id'],
         set_={
@@ -119,3 +116,7 @@ async def tracked_product(article: int, db: AsyncSession):
 
     await db.execute(stmt)
     await db.commit()
+
+    result = await db.execute(select(TrackedProduct.id).where(TrackedProduct.article_id == article))
+    tracked_id = result.scalars().first()
+    await db.execute(update(Product).values(tracked_id=tracked_id))
